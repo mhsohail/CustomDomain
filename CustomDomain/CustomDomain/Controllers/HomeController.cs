@@ -31,7 +31,7 @@ namespace CustomDomain.Controllers
             return View();
         }
 
-        public void Domain()
+        public string Domain()
         {
             string ipAddress = "*";
             string subDomainName = "loc";
@@ -45,7 +45,7 @@ namespace CustomDomain.Controllers
                     Site site = mgr.Sites["siteName"];
                     if (site != null)
                     {
-                        return; // Site bestaat al
+                        //return; // Site bestaat al
                     }
 
                     string currentSiteName = System.Web.Hosting.HostingEnvironment.SiteName;
@@ -77,10 +77,12 @@ namespace CustomDomain.Controllers
                     // add url to access control list
                     AccessControlList.AddUrl("http://" + hostHeader + ":" + currentSiteTcpPort + "/");
                     AccessControlList.AddUrl("http://" + hostHeader2 + ":" + currentSiteTcpPort + "/");
+
+                    return "Subdomain created.\nRestart debugging and visit: " + hostHeader + ":" + currentSiteTcpPort;
                 }
                 catch (Exception exc)
                 {
-
+                    return exc.Message;
                 }
             }
         }
