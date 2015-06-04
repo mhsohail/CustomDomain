@@ -34,9 +34,10 @@ namespace CustomDomain.Controllers
         public string Domain()
         {
             string ipAddress = "*";
-            string subDomainName = "loc";
+            string subDomainName = "jee";
             string hostHeader = string.Empty;
             string hostHeader2 = "www.";
+            string windowsRootDir = Path.GetPathRoot(Environment.SystemDirectory);
             
             using (ServerManager mgr = new ServerManager())
             {
@@ -72,7 +73,7 @@ namespace CustomDomain.Controllers
                     mgr.CommitChanges();
 
                     // add url and ip to hosts file
-                    System.IO.File.AppendAllText(@"c:\windows\system32\drivers\etc\hosts", Environment.NewLine + "127.0.0.1\t\t" + hostHeader +"\n127.0.0.1\t\t" + hostHeader2);
+                    System.IO.File.AppendAllText(windowsRootDir + "windows\\system32\\drivers\\etc\\hosts", Environment.NewLine + "127.0.0.1\t\t" + hostHeader +"\n127.0.0.1\t\t" + hostHeader2);
 
                     // add url to access control list
                     AccessControlList.AddUrl("http://" + hostHeader + ":" + currentSiteTcpPort + "/");
